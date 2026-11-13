@@ -1,0 +1,43 @@
+// Optional development check. Requires jsdom 26; not a browser rendering test.
+const {JSDOM}=require('jsdom');
+const fs=require('node:fs');
+const path=require('node:path');
+const assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..');
+const dom=new JSDOM(fs.readFileSync(path.join(root,'index.html'),'utf8'),{url:'https://example.test/repository/',runScripts:'outside-only',pretendToBeVisual:true});
+const w=dom.window,d=w.document;
+w.scrollTo=()=>{};
+// jsdom has no native dialog rendering; these stubs verify application wiring only.
+w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};
+w.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new w.Event('close'));};
+const errors=[];w.addEventListener('error',e=>errors.push(e.error));
+w.eval(fs.readFileSync(path.join(root,'script.js'),'utf8'));
+const $=s=>d.querySelector(s);
+const click=s=>$(s).click();
+const settle=()=>new Promise(r=>setTimeout(r,20));
+(async()=>{
+ assert.equal(d.querySelectorAll('.scene:not([hidden])').length,1);
+ assert.equal($('#previous').disabled,true);
+ click('[data-go]');await settle();assert.equal($('#observe').hidden,false);assert.equal(d.activeElement.id,'observe-title');assert.equal($('#progress').value,2);
+ click('[data-detail="eye"]');assert.match($('#detail-title').textContent,/눈/);assert.equal($('.hotspot.eye').getAttribute('aria-pressed'),'true');
+ $('#detail-zoom').focus();click('#detail-zoom');assert.equal($('#viewer').open,true);assert.equal($('#zoom-level').textContent,'200%');assert.equal(d.activeElement.hasAttribute('data-close'),true);
+ click('#zoom-in');assert.equal($('#zoom-level').textContent,'225%');click('#zoom-reset');assert.equal($('#zoom-level').textContent,'100%');
+ click('#viewer [data-close]');assert.equal($('#viewer').open,false);assert.equal(d.activeElement.id,'detail-zoom');
+ w.location.hash='#compare';await settle();assert.equal($('#compare').hidden,false);assert.equal($('#progress').value,4);
+ $('#left-select').value='1';$('#left-select').dispatchEvent(new w.Event('change'));assert.match($('#left-info').textContent,/정내894/);assert.match($('#left-image img').src,/assets\/A02.jpg$/);
+ click('[data-scale="left:0.25"]');assert.equal($('#left-scale').textContent,'125%');
+ $('#right-select').value='1';$('#right-select').dispatchEvent(new w.Event('change'));assert.match($('#comparison-note').textContent,/같은 작품/);
+ click('#reset-compare');assert.equal($('#left-select').value,'0');assert.equal($('#right-select').value,'2');assert.equal($('#left-scale').textContent,'100%');
+ click('[data-side-view="right"]');assert.match($('#viewer-title').textContent,/정내1031/);click('#viewer [data-close]');
+ click('[data-sources]');assert.equal($('#sources-dialog').open,true);assert.equal(d.querySelectorAll('#source-list article').length,3);click('#sources-dialog [data-close]');
+ $('#left-image img').dispatchEvent(new w.Event('error'));assert.match($('#left-image').textContent,/原本|원본 자료 준비 중/);
+ w.location.hash='#outro';await settle();assert.equal($('#next').disabled,true);
+ $('#reflection').value='나무';$('#reflection').dispatchEvent(new w.Event('input'));assert.match($('#reflection-status').textContent,/2 \/ 240/);
+ click('#restart');await settle();assert.equal($('#intro').hidden,false);assert.equal($('#reflection').value,'');assert.equal($('.hotspot.eye').getAttribute('aria-pressed'),'false');
+ w.history.back();await settle();assert.equal($('#outro').hidden,false);
+ click('#motion-toggle');assert.equal(d.body.classList.contains('no-motion'),true);assert.equal($('#motion-toggle').getAttribute('aria-pressed'),'true');
+ assert.equal(errors.length,0,errors.map(String).join('\n'));
+ console.log('PASS: scene navigation, focus target, progress, hotspots, viewer controls and close restoration, comparison selection/zoom/reset, source dialog, missing-image fallback, reflection, restart, browser history wiring.');
+ console.log('LIMIT: dialog stubs do not validate native modality, focus trap, Escape, rendering, or physical touch.');
+ w.close();
+})().catch(e=>{console.error(e);w.close();process.exitCode=1;});
