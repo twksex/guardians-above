@@ -61,3 +61,9 @@ Sites 작업 지침은 managed Linux에서 `cua_repl.js`가 없으면 브라우�
 - [ ] Pages 게시 후 실제 URL과 하위 경로에서 모든 사진·버튼 및 브라우저 뒤로가기 확인
 
 학술 검토: 교육 PDF 추가 검토, 개별 유물의 용도·제작 의도 해석 검수는 별도 필요하다.
+
+## GitHub 공개 시도
+
+사용자의 ‘네가 다 해줘’ 요청에 따라 연결 계정 twksex에서 공개 저장소 guardians-above 생성을 시도했다. GitHub CLI 인증은 유효하지만 GraphQL createRepository와 REST POST /user/repos 모두 Resource not accessible by integration으로 거부되었다(REST HTTP 403). 연결 도구가 반환한 접근 가능 저장소 목록도 비어 있었다. 사용자 권한 확인 요청이나 자동 승인 검토의 거절이 아니라 GitHub 앱 인증 권한의 제한이다.
+
+로컬 Git 저장소 초기화와 소스 커밋은 완료했다. 원격 저장소 생성·업로드·Pages 설정은 완료되지 않았다. 원격 리소스나 공개 URL을 생성했다고 보고하지 않는다. 빈 저장소 생성 및 GitHub 앱 접근 허용 후 이어서 진행할 수 있다. 구문·정적·DOM 검사를 이번 공개 시도 전 재실행해 모두 통과했다.
