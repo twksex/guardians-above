@@ -32,7 +32,7 @@ try:
     for p in sorted((root/'assets').glob('*')):
         if p.suffix not in ('.jpg','.webp'): continue
         with Image.open(p) as image:
-            if p.suffix=='.webp':
+            if p.suffix=='.webp' and p.name.startswith('guardian-'):
                 assert image.size==(1024,1536)
                 assert image.mode=='RGBA' and image.getextrema()[-1][0]==0
             image.verify()

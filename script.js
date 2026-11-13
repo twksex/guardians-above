@@ -7,9 +7,9 @@ const objects = [
 
 const details={eye:{title:'01. 둥글게 솟은 눈',copy:'두 눈의 중심이 둥글게 솟아 있습니다. 눈 주변을 감싼 선과 얼굴 표면의 높낮이를 함께 살펴보세요.',x:.45,y:.47},mouth:{title:'02. 입 주변의 선',copy:'코 아래에서 입 주변으로 이어지는 돌출된 선이 보입니다. 양쪽의 모양이 어떻게 마주하고 있는지 관찰해 보세요.',x:.51,y:.59},rim:{title:'03. 반복되는 테두리',copy:'얼굴의 윗 테두리를 따라 둥근 돌기가 반복됩니다. 얼굴 안쪽의 선과 바깥쪽 장식은 어떻게 다르게 보이나요?',x:.52,y:.25}};
 // Every instance references this one registry: same artifact, same imagined character.
-Object.assign(objects[0],{guardian:'guardian-A01.webp',crop:{x:.311,y:.218,w:.378,h:.580},face:{left:19.5,top:2,width:61},characterName:'둥근 흙의 수호자',characterAlt:'밝은 흙빛의 둥근 몸통과 구슬 돌기 관절, 짧고 튼튼한 다리를 가진 정면 입상의 수호자.',designNote:'둥근 눈과 테두리의 돌기를 넓은 몸통·둥근 관절·구슬 같은 발목 돌기로 확장했습니다. 밝은 흙빛과 정면으로 선 자세에 둥근 양감을 이어 담았습니다.'});
-Object.assign(objects[1],{guardian:'guardian-A02.webp',crop:{x:.155,y:.125,w:.696,h:.760},face:{left:24,top:.5,width:41},characterName:'휘감는 선의 수호자',characterAlt:'짙은 흙빛의 휘감는 몸과 흐르는 갈기, 뻗은 손과 굽힌 무릎을 가진 수호자.',designNote:'흐르는 눈썹과 깊은 굴곡을 갈기·가슴·팔·다리까지 이어지는 곡선으로 확장했습니다. 휘어진 몸과 뻗은 손, 구부린 무릎으로 다른 두 수호자와 구별되는 동세를 만들었습니다.'});
-Object.assign(objects[2],{guardian:'guardian-A03.webp',crop:{x:.222,y:.140,w:.573,h:.650},face:{left:17.5,top:5.5,width:65},characterName:'넓은 웃음의 수호자',characterAlt:'회색의 넓은 몸과 소용돌이 관절, 큰 손발을 펼치고 낮게 앉은 수호자.',designNote:'넓게 펼쳐진 입과 둥근 볼 장식을 낮고 넓게 앉은 체구·소용돌이 관절·큰 손발로 확장했습니다. 사진의 회색 표면과 가로로 펼쳐진 형태를 몸 전체의 인상에 이어 담았습니다.'});
+Object.assign(objects[0],{guardian:'guardian-A01.webp',cutout:'A01-cutout.webp',crop:{x:929/3000,y:435/2000,w:1148/3000,h:1170/2000},face:{left:19.5,top:2,width:61},characterName:'둥근 흙의 수호자',characterAlt:'밝은 흙빛의 둥근 몸통과 구슬 돌기 관절, 짧고 튼튼한 다리를 가진 정면 입상의 수호자.',designNote:'둥근 눈과 테두리의 돌기를 넓은 몸통·둥근 관절·구슬 같은 발목 돌기로 확장했습니다. 밝은 흙빛과 정면으로 선 자세에 둥근 양감을 이어 담았습니다.'});
+Object.assign(objects[1],{guardian:'guardian-A02.webp',cutout:'A02-cutout.webp',crop:{x:96/618,y:71/600,w:430/618,h:462/600},face:{left:24,top:.5,width:41},characterName:'휘감는 선의 수호자',characterAlt:'짙은 흙빛의 휘감는 몸과 흐르는 갈기, 뻗은 손과 굽힌 무릎을 가진 수호자.',designNote:'흐르는 눈썹과 깊은 굴곡을 갈기·가슴·팔·다리까지 이어지는 곡선으로 확장했습니다. 휘어진 몸과 뻗은 손, 구부린 무릎으로 다른 두 수호자와 구별되는 동세를 만들었습니다.'});
+Object.assign(objects[2],{guardian:'guardian-A03.webp',cutout:'A03-cutout.webp',crop:{x:144/668,y:71/515,w:389/668,h:339/515},face:{left:17.5,top:5.5,width:65},characterName:'넓은 웃음의 수호자',characterAlt:'회색의 넓은 몸과 소용돌이 관절, 큰 손발을 펼치고 낮게 앉은 수호자.',designNote:'넓게 펼쳐진 입과 둥근 볼 장식을 낮고 넓게 앉은 체구·소용돌이 관절·큰 손발로 확장했습니다. 사진의 회색 표면과 가로로 펼쳐진 형태를 몸 전체의 인상에 이어 담았습니다.'});
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
@@ -38,16 +38,16 @@ function protectImage(image,kind='artifact') {
  image.addEventListener('error',fail,{once:true});
  if(image.complete&&image.naturalWidth===0)fail();
 }
-function sourceImage(object,{priority=false,id=null}={}) {
+function sourceImage(object,{priority=false,id=null,isolated=false}={}) {
  const image=document.createElement('img');
  image.width=object.width;image.height=object.height;image.alt=object.alt;image.decoding='async';image.loading=priority?'eager':'lazy';
  if(priority)image.setAttribute('fetchpriority','high');if(id)image.id=id;
- image.src=`./assets/${object.id}.jpg`;return image;
+ image.src=isolated?`./assets/${object.cutout}?v=7`:`./assets/${object.id}.jpg`;return image;
 }
 function makeCrop(object,options={}) {
  const crop=document.createElement('span');crop.className='artifact-crop';crop.style.aspectRatio=String(ratioFor(object));
- const image=sourceImage(object,options);image.className='cropped-source';
- image.style.clipPath=`url(#${object.id})`;image.style.width=`${100/object.crop.w}%`;image.style.left=`${-100*object.crop.x/object.crop.w}%`;image.style.top=`${-100*object.crop.y/object.crop.h}%`;
+ const image=sourceImage(object,{...options,isolated:true});image.className='cropped-source';
+ image.style.width=`${100/object.crop.w}%`;image.style.left=`${-100*object.crop.x/object.crop.w}%`;image.style.top=`${-100*object.crop.y/object.crop.h}%`;
  crop.append(image);return crop;
 }
 function fitNode(container,node,ratio,scale=1) {

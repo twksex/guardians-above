@@ -17,7 +17,7 @@ h2{font-size:clamp(2rem,3.5vw,3rem);margin:0 0 20px}h3{font-size:1.4rem;margin:1
 .primary{background:var(--gold);border-color:var(--gold);color:var(--bg);font-size:1rem;min-width:185px;min-height:52px;display:inline-flex;gap:35px;justify-content:space-between;align-items:center;padding:14px 22px}
 .primary:hover{background:#ceb17e;color:var(--bg)}.interpretation{font: .85rem/1.85 var(--ui);color:#d9c296;border-left:2px solid var(--gold);padding-left:13px}
 .skip{position:fixed;top:-100px;left:12px;z-index:30;padding:12px;background:var(--text);color:var(--bg)}.skip:focus{top:10px}
-.clip-definitions{position:absolute;overflow:hidden;pointer-events:none}
+
 .masthead{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:23px 4%;flex-wrap:wrap;border-bottom:1px solid var(--line)}
 .brand{display:flex;gap:13px;text-decoration:none;align-items:center;font-size:1.05rem;line-height:1.6}.brand small{display:block;font: .8rem/1.9 var(--ui);letter-spacing:1.5px;color:var(--muted)}
 .seal{color:var(--gold);border:1px solid var(--gold);padding:6px 8px;font-size:1rem;line-height:1.1}.reading-tools{display:flex;gap:8px;flex-wrap:wrap}
@@ -79,7 +79,7 @@ dialog{background:var(--bg);color:var(--text);border:1px solid #777066;padding:2
 }
 @media(max-height:550px){.viewer-viewport,.guardian-viewport{height:40dvh;min-height:110px}.dialog-header{position:static}.music-bar{position:static}}
 @media(prefers-reduced-motion:no-preference){
- .scene{animation:scene-arrive .45s ease-out}.imagination-panel{animation:scene-arrive .4s ease-out}.observation-stage .artifact-display{transition:transform .4s ease-out}.photo-open{transition:filter .2s ease}.photo-open:hover{filter:drop-shadow(0 0 9px #b79b6830)}button,a{transition:color .18s,border-color .18s,background-color .18s}
+ .scene{animation:scene-arrive .45s ease-out}.imagination-panel{animation:scene-arrive .4s ease-out}.observation-stage .artifact-display{transition:transform .4s ease-out}button,a{transition:color .18s,border-color .18s,background-color .18s}
  @keyframes scene-arrive{from{opacity:.65;transform:translateY(7px)}to{opacity:1;transform:none}}
 }
 body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation:none!important;transition:none!important}

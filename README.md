@@ -2,7 +2,7 @@
 
 국립중앙박물관 제안용 **비공식 시범 웹전시**. 공식 기관의 승인·제작·협력·후원을 의미하지 않습니다.
 
-- 관람: https://twksex.github.io/guardians-above/?v=6
+- 관람: https://twksex.github.io/guardians-above/?v=7
 - 소스: https://github.com/twksex/guardians-above
 - 청소년·성인 대상, 약 5~8분
 
@@ -56,6 +56,8 @@ guardians-above/
 ├── script.js               자료 목록·공통 사진 구성·기능 상태
 ├── assets/
 │   ├── A01.jpg, A02.jpg, A03.jpg
+│   ├── A01-cutout.webp, A02-cutout.webp, A03-cutout.webp
+│   ├── A01-matte.png, A02-matte.png, A03-matte.png
 │   ├── guardian-A01.webp, guardian-A02.webp, guardian-A03.webp
 │   └── guardian-night.mp3
 ├── audit.md                변경 전 근거·우선순위
@@ -75,7 +77,7 @@ guardians-above/
 | 정내894 / 도깨비얼굴무늬 기와 | 통일신라 | A02.jpg | 휘감는 선의 수호자 |
 | 정내1031 / 도깨비얼굴무늬 기와 | 고려 | A03.jpg | 넓은 웃음의 수호자 |
 
-국립중앙박물관의 공식 정보와 사진, 각 페이지의 **공공누리 제1유형(출처표시)**을 확인했습니다. 실제 사진 3점·기존 캐릭터 3종·음원은 이번 개편에서 변경하지 않았습니다. 실제 사진은 CSS 표시 영역과 마스크로 촬영 배경을 가리되 원본 파일을 유지합니다. 도식과 상징 SVG는 직접 제작했습니다. 상세 출처·이용 조건·미확인 정보는 [sources.md](sources.md).
+국립중앙박물관의 공식 정보와 사진, 각 페이지의 **공공누리 제1유형(출처표시)**을 확인했습니다. 실제 사진 3점·기존 캐릭터 3종·음원은 이번 개편에서 변경하지 않았습니다. 실제 JPG 원본은 유지하고 별도의 무손실 투명 WebP에서 촬영 배경을 분리했습니다. 화면용 다각형/SVG 마스크는 제거했습니다. 보이는 픽셀의 RGB 값이 원본과 동일함을 검사했으며, 원본 보기에서는 촬영 배경을 포함한 JPG를 그대로 엽니다. 도식과 상징 SVG는 직접 제작했습니다. 상세 출처·이용 조건·미확인 정보는 [sources.md](sources.md).
 
 ## 검증과 한계
 
@@ -90,6 +92,8 @@ node --check script.js
 python tests/static.py
 npm install --no-save --package-lock=false jsdom@26.1.0
 node tests/dom.cjs
+# ImageMagick이 설치되어 있으면 픽셀·투명도 검사
+node tests/mattes.cjs
 ```
 
 `node_modules/`는 게시하지 않습니다. Pillow가 없으면 이미지 디코딩만 미검증으로 표시됩니다. jsdom의 모달·미디어·클립보드 스텁 검사는 실제 브라우저 테스트와 다릅니다.

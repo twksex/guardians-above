@@ -73,3 +73,11 @@ matchMedia 조건을 모의한 상태 검사이다. CSS의 실제 폭·높이·�
 기능 변경 커밋 a4d4b86a5b5ec61ba2508bd15816c6cf78945dfa의 GitHub Pages 실행 43370577187이 success로 완료되었다.
 
 실제 관람 주소 https://twksex.github.io/guardians-above/?v=6 가 HTTP 200을 반환하고 로컬 index.html과 일치함을 확인했다. index.html·style.css·script.js, 공식 JPG 3점, AI WebP 3종, MP3, audit.md·review.md·verification.md 총 13개 공개 파일도 HTTP 200 및 로컬 파일과 바이트 일치를 확인했다. 확인 뒤 이 검증 기록만 갱신했다. 네트워크 파일 제공 확인은 브라우저 관람 검증이 아니다.
+
+## 누끼 교정 검사
+
+- 기존 SVG 다각형과 style.clipPath를 완전히 제거하고 원본 크기의 무손실 투명 WebP 3점을 직접 표시한다. 원본 보기에서는 변경하지 않은 JPG를 표시한다.
+- node tests/mattes.cjs 통과: 원본과 마스크·출력 크기 일치, 지정한 외부·흰 조각·구멍의 alpha=0, 유물 내부 alpha>250, 모든 비투명 픽셀의 RGB가 원본과 정확히 일치.
+- 비교한 픽셀 수: A01 1,006,992 / A02 139,859 / A03 118,370. 원본 JPG 3점의 Git 변경 없음도 확인했다.
+- 세 검은 배경 합성 이미지를 직접 열어 가장자리·구멍·외부 배경을 확인했다. 이 항목은 이미지 자산 검토이며 실제 브라우저 스크린샷 검증이 아니다.
+- 구문·정적 검사와 기존 관찰/비교/원본/캐릭터/음악/개인 카드 DOM 회귀 검사 통과. 원본 모드에는 투명 사진이나 CSS 마스크가 적용되지 않음을 확인했다.
