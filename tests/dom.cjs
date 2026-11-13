@@ -25,7 +25,7 @@ function setup(blockAutoplay){
  await settle();assert.equal(state.calls,1,'Autoplay must be attempted on entry');assert.equal(state.paused,true);assert.match($('#music-status').textContent,/자동재생/);
  assert.equal($('.sound-panel'),null);assert.equal($('.hotspot'),null);assert.equal(d.querySelector('input[type=range]'),null);assert.equal($('#music-time'),null);
  assert.equal(d.querySelectorAll('.scene:not([hidden])').length,1);assert.equal($('#previous').disabled,true);
- assert.match($('[data-layered="1"] .imagined-character').src,/guardian-A02.webp$/);
+ assert.match($('[data-layered="1"] .imagined-character').src,/guardian-A02.webp(?:\?.*)?$/);
  click('[data-go]');await settle();assert.equal($('#observe').hidden,false);assert.equal(d.activeElement.id,'observe-title');assert.equal($('#progress').value,2);
  assert.equal(d.querySelectorAll('.layered-scene [data-detail]').length,0,'Observation controls must never cover the image');
  click('[data-detail="eye"]');assert.match($('#detail-title').textContent,/눈/);assert.equal($('[data-detail="eye"]').getAttribute('aria-pressed'),'true');
@@ -35,6 +35,7 @@ function setup(blockAutoplay){
  click('#viewer [data-close]');assert.equal(d.activeElement.id,'detail-zoom');
  const observationBase=$('[data-layered="0"] .imagined-character').src;
  const observationGeometry=$('[data-layered="0"] .tile-overlay').getAttribute('style');
+ assert.match($('#observe .character-design-note').textContent,/둥근 몸통|넓은 몸통/);
  const tile=$('[data-layered="0"] .tile-overlay');tile.focus();tile.click();assert.match($('#viewer-title').textContent,/정내902/);click('#viewer [data-close]');assert.equal(d.activeElement,tile);
  const toggle=$('#observe [data-layer-toggle]');toggle.click();assert.equal(tile.hidden,true);toggle.click();assert.equal(tile.hidden,false);
  const guardianButton=$('#observe [data-guardian]');guardianButton.focus();guardianButton.click();assert.match($('#guardian-title').textContent,/정내902/);assert.equal($('.guardian-viewport .imagined-character').src,observationBase);
@@ -47,7 +48,7 @@ function setup(blockAutoplay){
  const assets=['guardian-A01.webp','guardian-A02.webp','guardian-A03.webp'];
  for(let index=0;index<3;index++){
   $('#left-select').value=String(index);$('#left-select').dispatchEvent(new w.Event('change'));
-  assert.ok($('#left-image .imagined-character').src.endsWith(assets[index]));assert.ok($('#left-image .overlaid-artifact').src.endsWith(`A0${index+1}.jpg`));
+  assert.ok(new URL($('#left-image .imagined-character').src).pathname.endsWith(assets[index]));assert.match($('#left-info .character-design-note').textContent,/기와에서 이어진 형태/);assert.ok($('#left-image .overlaid-artifact').src.endsWith(`A0${index+1}.jpg`));
   click('#left-image .tile-overlay');assert.match($('#viewer-title').textContent,new RegExp(['정내902','정내894','정내1031'][index]));click('#viewer [data-close]');
  }
  $('#left-select').value='0';$('#left-select').dispatchEvent(new w.Event('change'));

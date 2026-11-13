@@ -150,3 +150,5 @@ body.no-motion *,body.no-motion *::before,body.no-motion *::after{animation:none
 @media(max-width:720px){.main-character,.observation-character{height:550px}.compare-image.layered-viewport{height:550px}.outro-character{height:520px}.character-actions{gap:8px}.character-actions button{font-size:.875rem}.character-audio-controls{justify-content:center}.guardian-viewport.layered-viewport{height:50dvh}.observation-text h3{min-height:0}}
 .context-character{height:480px}.context-guardian figcaption{font-size:.8125rem}
 @media(max-width:720px){.context-character{height:480px}}
+.character-design-note{font-size:.875rem;line-height:1.85;color:var(--muted);margin:12px 0 18px;max-width:48em}
+.character-design-note strong,.character-design-note .label{color:#d8c293;font-size:.9375rem;font-weight:400}

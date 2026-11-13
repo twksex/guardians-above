@@ -7,9 +7,9 @@ const objects = [
 
 const details={eye:{title:'01. 둥글게 솟은 눈',copy:'두 눈의 중심이 둥글게 솟아 있습니다. 눈 주변을 감싼 선과 얼굴 표면의 높낮이를 함께 살펴보세요.',x:.45,y:.47},mouth:{title:'02. 입 주변의 선',copy:'코 아래에서 입 주변으로 이어지는 돌출된 선이 보입니다. 양쪽의 모양이 어떻게 마주하고 있는지 관찰해 보세요.',x:.51,y:.59},rim:{title:'03. 반복되는 테두리',copy:'얼굴의 윗 테두리를 따라 둥근 돌기가 반복됩니다. 얼굴 안쪽의 선과 바깥쪽 장식은 어떻게 다르게 보이나요?',x:.52,y:.25}};
 // Every instance references this one registry: same artifact, same imagined character.
-Object.assign(objects[0],{guardian:'guardian-A01.webp',crop:{x:.311,y:.218,w:.378,h:.580},face:{left:37.5,top:7,width:28}});
-Object.assign(objects[1],{guardian:'guardian-A02.webp',crop:{x:.155,y:.125,w:.696,h:.760},face:{left:34.5,top:0,width:36}});
-Object.assign(objects[2],{guardian:'guardian-A03.webp',crop:{x:.222,y:.140,w:.573,h:.650},face:{left:36.5,top:8,width:30}});
+Object.assign(objects[0],{guardian:'guardian-A01.webp',crop:{x:.311,y:.218,w:.378,h:.580},face:{left:19.5,top:2,width:61},characterName:'둥근 흙의 수호자',characterAlt:'밝은 흙빛의 둥근 몸통과 구슬 돌기 관절, 짧고 튼튼한 다리를 가진 정면 입상의 수호자.',designNote:'둥근 눈과 테두리의 돌기를 넓은 몸통·둥근 관절·구슬 같은 발목 돌기로 확장했습니다. 밝은 흙빛과 정면으로 선 자세에 둥근 양감을 이어 담았습니다.'});
+Object.assign(objects[1],{guardian:'guardian-A02.webp',crop:{x:.155,y:.125,w:.696,h:.760},face:{left:24,top:.5,width:41},characterName:'휘감는 선의 수호자',characterAlt:'짙은 흙빛의 휘감는 몸과 흐르는 갈기, 뻗은 손과 굽힌 무릎을 가진 수호자.',designNote:'흐르는 눈썹과 깊은 굴곡을 갈기·가슴·팔·다리까지 이어지는 곡선으로 확장했습니다. 휘어진 몸과 뻗은 손, 구부린 무릎으로 다른 두 수호자와 구별되는 동세를 만들었습니다.'});
+Object.assign(objects[2],{guardian:'guardian-A03.webp',crop:{x:.222,y:.140,w:.573,h:.650},face:{left:17.5,top:5.5,width:65},characterName:'넓은 웃음의 수호자',characterAlt:'회색의 넓은 몸과 소용돌이 관절, 큰 손발을 펼치고 낮게 앉은 수호자.',designNote:'넓게 펼쳐진 입과 둥근 볼 장식을 낮고 넓게 앉은 체구·소용돌이 관절·큰 손발로 확장했습니다. 사진의 회색 표면과 가로로 펼쳐진 형태를 몸 전체의 인상에 이어 담았습니다.'});
 const officialURL=o=>`https://www.museum.go.kr/MUSEUM/contents/M0502000000.do?relicId=${o.relic}&schM=view&searchId=search`;
 const $=s=>document.querySelector(s);
 const $$=s=>[...document.querySelectorAll(s)];
@@ -36,7 +36,7 @@ function fitLayer(container,scale=1){
 function renderLayer(container,index,scale=1,overlay=true){
  const o=objects[index];container.replaceChildren();container.dataset.objectId=o.id;
  const scene=document.createElement('div');scene.className='layered-scene';scene.dataset.objectId=o.id;
- const base=document.createElement('img');base.className='imagined-character';base.src=`./assets/${o.guardian}`;base.width=1024;base.height=1536;base.alt=`${o.number} 귀면와의 얼굴에서 상상한 도깨비 수호자. AI 창작이며 학술 복원도가 아닙니다.`;base.decoding='async';
+ const base=document.createElement('img');base.className='imagined-character';base.src=`./assets/${o.guardian}?v=5`;base.width=1024;base.height=1536;base.alt=`${o.number}에서 상상한 ${o.characterName}. ${o.characterAlt} AI 창작이며 학술 복원도가 아닙니다.`;base.decoding='async';
  const tile=document.createElement('button');tile.className='tile-overlay';tile.setAttribute('aria-label',`${o.number} 얼굴 위 실제 기와 상세 확대`);tile.title='실제 기와를 눌러 상세 사진 보기';tile.hidden=!overlay;
  tile.style.left=`${o.face.left}%`;tile.style.top=`${o.face.top}%`;tile.style.width=`${o.face.width}%`;
  const crop=document.createElement('span');crop.className='tile-crop';crop.style.aspectRatio=String(o.width*o.crop.w/(o.height*o.crop.h));
@@ -49,7 +49,7 @@ function setLayerVisibility(container,button,show){
  const tile=container.querySelector('.tile-overlay');if(tile)tile.hidden=!show;
  button.setAttribute('aria-pressed',String(show));button.textContent=show?'기와 겹침 숨기기':'실제 기와 겹쳐 보기';
 }
-$$('[data-layered]').forEach(container=>renderLayer(container,Number(container.dataset.layered)));
+$$('[data-layered]').forEach(container=>{const index=Number(container.dataset.layered),o=objects[index];renderLayer(container,index);const caption=container.closest('.character-figure')?.querySelector('figcaption');if(caption){const note=document.createElement('p');note.className='character-design-note';const title=document.createElement('strong');title.textContent=o.characterName;note.append(title,document.createElement('br'),document.createTextNode(o.designNote));caption.prepend(note);}});
 $$('[data-layer-toggle]').forEach(button=>button.addEventListener('click',()=>{
  const container=button.closest('.character-figure').querySelector('[data-layered]');setLayerVisibility(container,button,button.getAttribute('aria-pressed')!=='true');
 }));
@@ -61,7 +61,7 @@ function scaleSide(side,delta){
 function renderSide(side){
  const state=sideState[side],o=objects[state.index];renderLayer($(`#${side}-image`),state.index,state.scale,state.overlay);
  $(`#${side}-select`).value=String(state.index);
- $(`#${side}-info`).innerHTML=`<span class="label">${o.era} · ${o.number}</span><h3>도깨비얼굴무늬 기와</h3><p>${o.material}<br>${o.size}</p><p><span class="label">실제 사진에서 관찰하기</span><br>${o.observation}</p><p class="small">캐릭터와 얼굴 위 배치는 AI 창작 상상입니다.</p><a href="${officialURL(o)}" target="_blank" rel="noopener">사진 © 국립중앙박물관 · 공공누리 제1유형 · 원문 ↗</a>`;
+ $(`#${side}-info`).innerHTML=`<span class="label">${o.era} · ${o.number}</span><h3>도깨비얼굴무늬 기와</h3><p>${o.material}<br>${o.size}</p><p><span class="label">실제 사진에서 관찰하기</span><br>${o.observation}</p><p class="character-design-note"><span class="label">기와에서 이어진 형태 · ${o.characterName}</span><br>${o.designNote}</p><p class="small">캐릭터와 얼굴 위 배치는 AI 창작 상상입니다.</p><a href="${officialURL(o)}" target="_blank" rel="noopener">사진 © 국립중앙박물관 · 공공누리 제1유형 · 원문 ↗</a>`;
  setLayerVisibility($(`#${side}-image`),$(`[data-side-toggle="${side}"]`),state.overlay);scaleSide(side,0);
  $('#comparison-note').textContent=sideState.left.index===sideState.right.index?'같은 기와를 선택하면 같은 캐릭터와 같은 겹침 위치가 표시됩니다.':'각 수호자의 얼굴 위 실제 기와를 눌러 눈·입·윤곽을 자세히 비교해 보세요.';
 }
@@ -117,7 +117,7 @@ $$('[data-side-view]').forEach(button=>button.addEventListener('click',()=>showA
 $('#zoom-in').addEventListener('click',()=>scaleViewer(.25));$('#zoom-out').addEventListener('click',()=>scaleViewer(-.25));$('#zoom-reset').addEventListener('click',()=>{viewerScale=1;scaleViewer(0);$('.viewer-viewport').scrollTop=0;$('.viewer-viewport').scrollLeft=0;});
 $('#original-toggle').addEventListener('click',()=>{viewerOriginal=!viewerOriginal;$('.viewer-viewport').classList.toggle('show-original',viewerOriginal);$('#original-toggle').setAttribute('aria-pressed',String(viewerOriginal));$('#original-toggle').textContent=viewerOriginal?'배경 가린 기와 보기':'원본 사진 보기';$('#viewer-treatment').textContent=viewerOriginal?'촬영 배경이 포함된 국립중앙박물관 원본 사진입니다.':'실제 기와 사진의 촬영 배경을 가린 화면입니다.';});
 function sizeGuardian(delta){guardianScale=Math.max(1,Math.min(3,guardianScale+delta));fitLayer($('.guardian-viewport'),guardianScale);$('#guardian-scale').textContent=`${Math.round(guardianScale*100)}%`;$('#guardian-minus').disabled=guardianScale===1;$('#guardian-plus').disabled=guardianScale===3;}
-function openGuardian(index){guardianIndex=index;guardianScale=1;const o=objects[index];$('#guardian-title').textContent=`${o.number}에서 상상한 수호자`;$('.guardian-disclaimer').textContent=`${o.number} 기와 위에 상상한 얼굴과 몸을 연결했습니다. 캐릭터와 얼굴 배치는 AI 창작 상상이며 역사적 복원이 아닙니다.`;openDialog($('#guardian-dialog'));renderLayer($('.guardian-viewport'),index);setLayerVisibility($('.guardian-viewport'),$('#guardian-layer-toggle'),true);sizeGuardian(0);$('.guardian-viewport').scrollTop=0;$('.guardian-viewport').scrollLeft=0;}
+function openGuardian(index){guardianIndex=index;guardianScale=1;const o=objects[index];$('#guardian-title').textContent=`${o.number} · ${o.characterName}`;$('.guardian-disclaimer').textContent=`${o.designNote} 캐릭터와 얼굴 배치는 AI 창작 상상이며 역사적 복원이 아닙니다.`;openDialog($('#guardian-dialog'));renderLayer($('.guardian-viewport'),index);setLayerVisibility($('.guardian-viewport'),$('#guardian-layer-toggle'),true);sizeGuardian(0);$('.guardian-viewport').scrollTop=0;$('.guardian-viewport').scrollLeft=0;}
 $$('[data-guardian]').forEach(button=>button.addEventListener('click',()=>openGuardian(Number(button.dataset.guardian))));
 $$('[data-side-guardian]').forEach(button=>button.addEventListener('click',()=>openGuardian(sideState[button.dataset.sideGuardian].index)));
 $('#guardian-plus').addEventListener('click',()=>sizeGuardian(.25));$('#guardian-minus').addEventListener('click',()=>sizeGuardian(-.25));$('#guardian-reset').addEventListener('click',()=>{guardianScale=1;sizeGuardian(0);$('.guardian-viewport').scrollTop=0;$('.guardian-viewport').scrollLeft=0;});
