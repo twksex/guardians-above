@@ -70,4 +70,6 @@ matchMedia 조건을 모의한 상태 검사이다. CSS의 실제 폭·높이·�
 
 ## 공개 확인
 
-GitHub Pages 배포 성공과 최신 공개 파일의 HTTP 응답·로컬 파일 일치는 배포 단계에서 별도로 확인한다. 네트워크 파일 제공 확인은 브라우저 관람 검증이 아니다.
+기능 변경 커밋 a4d4b86a5b5ec61ba2508bd15816c6cf78945dfa의 GitHub Pages 실행 43370577187이 success로 완료되었다.
+
+실제 관람 주소 https://twksex.github.io/guardians-above/?v=6 가 HTTP 200을 반환하고 로컬 index.html과 일치함을 확인했다. index.html·style.css·script.js, 공식 JPG 3점, AI WebP 3종, MP3, audit.md·review.md·verification.md 총 13개 공개 파일도 HTTP 200 및 로컬 파일과 바이트 일치를 확인했다. 확인 뒤 이 검증 기록만 갱신했다. 네트워크 파일 제공 확인은 브라우저 관람 검증이 아니다.
