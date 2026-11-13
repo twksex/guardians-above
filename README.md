@@ -28,7 +28,13 @@ GitHub의 저장소 파일 화면은 HTML 웹전시를 실행하지 않습니다
 5. 배포가 끝나면 Pages 설정에 표시된 실제 방문 링크로 접속합니다.
 6. 수정한 파일을 같은 브랜치에 커밋하면 다시 배포됩니다. 사진을 재배포할 때 기관명·작품명·공공누리·원문 출처를 유지하세요.
 
-이번 작업에서는 GitHub 저장소가 지정되지 않았으므로 원격 업로드·Pages 공개를 수행하지 않았습니다. 게시된 URL은 아직 없습니다.
+소스 업로드 완료: https://github.com/twksex/guardians-above
+
+GitHub 앱 인증으로 Pages 활성화를 시도했지만 HTTP 403(Resource not accessible by integration)으로 거부되었습니다. 저장소 소유자가 아래 설정에서 `Deploy from a branch → main → /(root) → Save`로 활성화해야 합니다.
+
+Pages 설정: https://github.com/twksex/guardians-above/settings/pages
+
+공개 배포 성공 및 실제 관람 URL은 아직 확인하지 못했습니다.
 
 ## 프로젝트 구조
 

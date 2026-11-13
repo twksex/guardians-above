@@ -67,3 +67,9 @@ Sites 작업 지침은 managed Linux에서 `cua_repl.js`가 없으면 브라우�
 사용자의 ‘네가 다 해줘’ 요청에 따라 연결 계정 twksex에서 공개 저장소 guardians-above 생성을 시도했다. GitHub CLI 인증은 유효하지만 GraphQL createRepository와 REST POST /user/repos 모두 Resource not accessible by integration으로 거부되었다(REST HTTP 403). 연결 도구가 반환한 접근 가능 저장소 목록도 비어 있었다. 사용자 권한 확인 요청이나 자동 승인 검토의 거절이 아니라 GitHub 앱 인증 권한의 제한이다.
 
 로컬 Git 저장소 초기화와 소스 커밋은 완료했다. 원격 저장소 생성·업로드·Pages 설정은 완료되지 않았다. 원격 리소스나 공개 URL을 생성했다고 보고하지 않는다. 빈 저장소 생성 및 GitHub 앱 접근 허용 후 이어서 진행할 수 있다. 구문·정적·DOM 검사를 이번 공개 시도 전 재실행해 모두 통과했다.
+
+## 저장소 생성 후 업로드 결과
+
+사용자가 https://github.com/twksex/guardians-above.git 저장소를 제공했다. 빈 공개 저장소와 push 권한을 확인한 뒤 main 브랜치에 소스·사진·문서·검사 코드를 정상 업로드했다. 강제 push나 기존 파일 덮어쓰기는 하지 않았다.
+
+POST /repos/twksex/guardians-above/pages로 main 및 루트 폴더를 지정해 Pages 활성화를 요청했지만 HTTP 403(Resource not accessible by integration)으로 거부되었다. 저장소 권한 메타데이터의 admin=true는 연결된 앱 토큰이 Pages 관리 API를 호출할 수 있다는 뜻이 아니다. Pages 설정은 소유자가 GitHub 웹 UI에서 수행해야 한다. Pages 배포 성공이나 실제 URL 응답은 아직 검증하지 않았다.
