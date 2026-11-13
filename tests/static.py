@@ -29,9 +29,13 @@ for bg in ('background','surface'):
         print(f'PASS: {fg}/{bg} contrast {ratio:.2f}:1')
 try:
     from PIL import Image
-    for p in (root/'assets').glob('*.jpg'):
+    for p in sorted((root/'assets').glob('*')):
+        if p.suffix not in ('.jpg','.webp'): continue
         with Image.open(p) as image:
+            if p.suffix=='.webp':
+                assert image.size==(1024,1536)
+                assert image.mode=='RGBA' and image.getextrema()[-1][0]==0
             image.verify()
-        print(f'PASS: JPEG decodes {p.name}')
+        print(f'PASS: image decodes and expected transparency/size {p.name}')
 except ImportError:
     print('NOT TESTED: image decoding (optional Pillow is not installed)')
