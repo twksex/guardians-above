@@ -30,11 +30,9 @@ GitHub의 저장소 파일 화면은 HTML 웹전시를 실행하지 않습니다
 
 소스 업로드 완료: https://github.com/twksex/guardians-above
 
-GitHub 앱 인증으로 Pages 활성화를 시도했지만 HTTP 403(Resource not accessible by integration)으로 거부되었습니다. 저장소 소유자가 아래 설정에서 `Deploy from a branch → main → /(root) → Save`로 활성화해야 합니다.
+공개 전시: https://twksex.github.io/guardians-above/
 
-Pages 설정: https://github.com/twksex/guardians-above/settings/pages
-
-공개 배포 성공 및 실제 관람 URL은 아직 확인하지 못했습니다.
+사용자가 Pages를 main 및 루트 폴더로 활성화한 뒤 GitHub 배포 성공과 Pages 상태 built를 확인했습니다. 공개 주소에서 HTML·CSS·JavaScript 및 사진 3점이 모두 HTTP 200으로 제공됩니다. 실제 브라우저 렌더링·터치·스크린리더 검증은 별도로 남아 있습니다.
 
 ## 프로젝트 구조
 
@@ -91,7 +89,7 @@ guardians-above/
 - `python tests/static.py`: 참조 파일 존재, HTML ID 중복 없음, 사진 대체 텍스트, 사진 파일 디코딩 통과.
 - 주요 텍스트 3색을 배경 2색과 조합한 6개 대비: 모두 WCAG AA 일반 텍스트 기준 4.5:1 이상. 수치는 verification.md에 기록.
 - jsdom 통합 검사: 화면 이동, 제목 포커스, 진행률, 관찰 지점, 확대·초기화, 모달 종료 후 포커스 복원, 비교 유물 변경·확대·초기화, 출처 목록, 이미지 오류, 감상 기록, 재시작, 뒤로가기 연결 통과.
-- **실제 브라우저 렌더링·모바일 터치·키보드 전체 관람·스크린리더·네이티브 모달의 포커스 가두기와 Esc·file:// 실행·GitHub Pages 배포는 미검증**입니다. DOM 검사를 실제 브라우저 테스트로 간주하지 않습니다. WCAG 2.2 AA 인증 또는 완전한 준수를 주장하지 않습니다.
+- **실제 브라우저 렌더링·모바일 터치·키보드 전체 관람·스크린리더·네이티브 모달의 포커스 가두기와 Esc·file:// 실행은 미검증**입니다. DOM 검사를 실제 브라우저 테스트로 간주하지 않습니다. WCAG 2.2 AA 인증 또는 완전한 준수를 주장하지 않습니다.
 
 선택적 개발 검사를 다시 실행하려면 Python과 Node.js가 필요합니다. 웹전시 감상에는 필요하지 않습니다.
 

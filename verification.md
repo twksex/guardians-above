@@ -73,3 +73,7 @@ Sites 작업 지침은 managed Linux에서 `cua_repl.js`가 없으면 브라우�
 사용자가 https://github.com/twksex/guardians-above.git 저장소를 제공했다. 빈 공개 저장소와 push 권한을 확인한 뒤 main 브랜치에 소스·사진·문서·검사 코드를 정상 업로드했다. 강제 push나 기존 파일 덮어쓰기는 하지 않았다.
 
 POST /repos/twksex/guardians-above/pages로 main 및 루트 폴더를 지정해 Pages 활성화를 요청했지만 HTTP 403(Resource not accessible by integration)으로 거부되었다. 저장소 권한 메타데이터의 admin=true는 연결된 앱 토큰이 Pages 관리 API를 호출할 수 있다는 뜻이 아니다. Pages 설정은 소유자가 GitHub 웹 UI에서 수행해야 한다. Pages 배포 성공이나 실제 URL 응답은 아직 검증하지 않았다.
+
+## Pages 공개 완료
+
+사용자가 GitHub 웹 UI에서 main 및 /(root)를 선택해 Pages를 활성화했다. 배포 실행 43345682253이 success로 완료되었고 Pages API 상태 built 및 html_url https://twksex.github.io/guardians-above/ 를 확인했다. 실제 공개 주소의 HTML, style.css, script.js, assets/A01.jpg, assets/A02.jpg, assets/A03.jpg가 모두 HTTP 200을 반환하고 HTML에 전시 제목이 포함되어 있음을 확인했다. 초기 building 단계의 일시적 404는 배포 완료 후 해소되었다. 이 검증은 실제 브라우저 조작 검증을 대신하지 않는다. 앞의 Pages 미검증·활성화 제한 기록은 완료 전의 이력이다.
