@@ -78,3 +78,66 @@ $('#restart').addEventListener('click',()=>{selectedDetail=null;$('#detail-title
 navigate(Math.max(0,ids.indexOf(location.hash.slice(1))),false);
 
 $('#motion-toggle').addEventListener('click',()=>{const disabled=document.body.classList.toggle('no-motion');$('#motion-toggle').setAttribute('aria-pressed',String(disabled));$('#motion-toggle').textContent=disabled?'화면 효과 켜기':'화면 효과 끄기';});
+
+// Reading size is a reversible preference; it does not alter the collection data.
+$('#text-size').addEventListener('click',()=>{
+ const large=document.documentElement.classList.toggle('large-text');
+ $('#text-size').setAttribute('aria-pressed',String(large));
+ $('#text-size').textContent=large?'기본 글씨':'큰 글씨';
+});
+$$('[data-detail]').forEach(button=>button.addEventListener('click',()=>{
+ const panel=$('.observation-text');
+ panel.classList.remove('detail-updated');
+ requestAnimationFrame(()=>panel.classList.add('detail-updated'));
+}));
+
+// Local original audio, opt-in only. Browsers may reject play(); navigation stays usable.
+const music=$('#exhibition-music');
+const musicToggle=$('#music-toggle');
+const musicStatus=$('#music-status');
+let musicOperation=0;
+let musicPending=false;
+music.volume=.25;
+function updateMusicButton(){
+ const playing=!music.paused;
+ musicToggle.setAttribute('aria-pressed',String(playing));
+ musicToggle.disabled=musicPending;
+ musicToggle.textContent=musicPending?'음악 불러오는 중…':playing?'배경음악 일시정지':'배경음악 재생';
+}
+musicToggle.addEventListener('click',async()=>{
+ if(musicPending)return;
+ if(!music.paused){
+  ++musicOperation;music.pause();musicStatus.textContent='배경음악이 일시정지되었습니다.';updateMusicButton();return;
+ }
+ const operation=++musicOperation;
+ musicPending=true;updateMusicButton();
+ try{
+  await music.play();
+  if(operation!==musicOperation)return;
+  if(document.hidden){music.pause();return;}
+  musicStatus.textContent='재생 중 · 지붕 위의 고요 · 다른 탭으로 이동하면 일시정지합니다.';
+ }catch(error){
+  if(operation===musicOperation)musicStatus.textContent='음악을 재생하지 못했습니다. 재생 버튼을 다시 눌러 주세요. 전시 관람은 계속할 수 있습니다.';
+ }finally{
+  if(operation===musicOperation){musicPending=false;updateMusicButton();}
+ }
+});
+$('#music-volume').addEventListener('input',event=>{
+ const volume=Math.max(0,Math.min(100,Number(event.target.value)));
+ music.volume=volume/100;
+ $('#music-volume-value').textContent=`${volume}%`;
+ event.target.setAttribute('aria-valuetext',`${volume}퍼센트`);
+});
+music.addEventListener('play',updateMusicButton);
+music.addEventListener('pause',updateMusicButton);
+music.addEventListener('error',()=>{
+ ++musicOperation;musicPending=false;music.pause();updateMusicButton();
+ musicStatus.textContent='음악 파일을 불러오지 못했습니다. 전시 관람은 계속할 수 있습니다.';
+});
+function pauseBackgroundMusic(){
+ const wasActive=!music.paused||musicPending;
+ ++musicOperation;musicPending=false;music.pause();updateMusicButton();
+ if(wasActive)musicStatus.textContent='화면을 벗어나 음악을 일시정지했습니다. 재생 버튼으로 다시 시작할 수 있습니다.';
+}
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseBackgroundMusic();});
+window.addEventListener('pagehide',pauseBackgroundMusic);

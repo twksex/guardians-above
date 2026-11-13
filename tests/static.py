@@ -13,7 +13,7 @@ class Check(HTMLParser):
         if tag=='img': self.images.append(attrs)
 c=Check(); c.feed((root/'index.html').read_text())
 assert len(c.ids)==len(set(c.ids)), 'Duplicate IDs'
-assert all((root/f[2:]).exists() for f in c.files), 'Missing local reference'
+assert all((root/f[2:].split('?',1)[0]).exists() for f in c.files), 'Missing local reference'
 assert all(i.get('alt') for i in c.images), 'Missing alt text'
 print('PASS: unique IDs, all local file references, image alternative text')
 colors={'background':'0b0d10','surface':'171a20','primary':'f1eee8','secondary':'b2b0ab','gold':'b79b68'}

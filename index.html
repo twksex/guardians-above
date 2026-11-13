@@ -4,12 +4,17 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="귀면와 세 점을 직접 관찰하고 비교하는 비공식 디지털 문화유산 시범 전시.">
 <title>천 년 전의 경고 — 지붕 위의 수호자, 귀면와</title>
-<link rel="stylesheet" href="./style.css"><script src="./script.js" defer></script>
+<link rel="stylesheet" href="./style.css?v=2"><script src="./script.js?v=2" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
-<header class="masthead"><a class="brand" href="#intro" aria-label="천 년 전의 경고 처음으로"><span class="seal" aria-hidden="true">鬼<br>面</span><span>천 년 전의 경고<small>DIGITAL HERITAGE EXHIBITION</small></span></a><span class="edition">비공식 시범 웹전시 <span> / </span> 관람 약 5–8분</span><button class="text-button" data-sources>전시 안내 · 출처 ↗</button></header>
-<div class="exhibition-shell">
+<header class="masthead"><a class="brand" href="#intro" aria-label="천 년 전의 경고 처음으로"><span class="seal" aria-hidden="true">鬼<br>面</span><span>천 년 전의 경고<small>DIGITAL HERITAGE EXHIBITION</small></span></a><span class="edition">비공식 시범 웹전시 <span> / </span> 관람 약 5–8분</span><div class="reading-tools" role="group" aria-label="읽기 설정과 전시 안내"><button id="text-size" aria-pressed="false">큰 글씨</button><button class="text-button" data-sources>전시 안내 · 출처 ↗</button></div></header>
+<div class="sound-panel" role="region" aria-label="전시 배경음악">
+<p class="track-title"><span aria-hidden="true">♫</span> 지붕 위의 고요</p>
+<div class="sound-controls"><button id="music-toggle" aria-pressed="false" aria-controls="exhibition-music">배경음악 재생</button><label class="volume-label" for="music-volume">음량 <input id="music-volume" type="range" min="0" max="100" value="25" step="1" aria-valuetext="25퍼센트"><output id="music-volume-value" for="music-volume">25%</output></label></div>
+<p id="music-status" role="status">잔잔한 전시용 창작 음악 · 재생 버튼을 누르면 시작합니다.</p>
+<audio id="exhibition-music" loop preload="none" src="./assets/guardians-ambient.mp3"></audio>
+</div><div class="exhibition-shell">
 <nav class="chapters" aria-label="전시관"><span class="nav-title">EXHIBITION INDEX</span><a href="#intro" data-step="0"><span>00</span> 프롤로그</a><a href="#observe" data-step="1"><span>01</span> 얼굴의 정체</a><a href="#context" data-step="2"><span>02</span> 지붕 위의 수호자</a><a href="#compare" data-step="3"><span>03</span> 서로 다른 얼굴들</a><a href="#outro" data-step="4"><span>04</span> 얼굴에 남겨진 마음</a><div class="rail-note">두려움의 얼굴에서<br>수호의 마음을 읽다.<span>GUARDIANS ABOVE</span></div><button id="motion-toggle" class="text-button motion-button" aria-pressed="false">화면 효과 끄기</button></nav>
 <main id="main" tabindex="-1">
 <section id="intro" class="scene hero" aria-labelledby="intro-title">
@@ -40,5 +45,5 @@
 <noscript><p>전시관 이동과 비교에는 JavaScript가 필요합니다. 브라우저에서 JavaScript를 허용해 주세요. 자료는 <a href="./sources.md">출처 문서</a>에서도 확인할 수 있습니다.</p></noscript>
 </main></div>
 <dialog id="viewer" aria-labelledby="viewer-title"><div class="dialog-header"><h2 id="viewer-title">유물 사진 확대</h2><button data-close aria-label="확대 화면 닫기">닫기 ×</button></div><p class="small muted">+/− 버튼으로 확대하고, 스크롤 또는 터치로 사진의 다른 부분을 살펴보세요. Esc로 닫을 수 있습니다.</p><div class="viewer-viewport" tabindex="0" role="region" aria-label="확대 사진, 스크롤하여 탐색"><img id="viewer-image" alt="확대할 유물 사진"></div><div class="zoom-controls"><button id="zoom-out" aria-label="사진 축소">−</button><output id="zoom-level" aria-live="polite">100%</output><button id="zoom-in" aria-label="사진 확대">+</button><button id="zoom-reset">초기화</button></div><p id="viewer-caption" class="small"></p></dialog>
-<dialog id="sources-dialog" aria-labelledby="sources-title"><div class="dialog-header"><h2 id="sources-title">전시 안내 · 출처</h2><button data-close aria-label="전시 안내 닫기">닫기 ×</button></div><p>《천 년 전의 경고: 지붕 위의 수호자, 귀면와》는 국립중앙박물관 제안용 비공식 시범 웹전시입니다. 기관의 승인·협력·후원을 의미하지 않습니다.</p><p>소장품 정보와 사진: 국립중앙박물관. 아래 세 작품의 공식 페이지에서 공공누리 제1유형(출처표시)을 확인했습니다. 원본 사진의 색·형태를 편집하지 않았습니다.</p><div id="source-list"></div><p><a href="https://www.kogl.or.kr/info/licenseType1.do" target="_blank" rel="noopener">공공누리 제1유형 이용 조건 ↗</a></p><p>역사적 맥락: 한국문화정보원 문화포털 귀면와 해설. 소장품의 확인된 정보, 사진 관찰, 현대적 해석을 구분합니다. ‘천 년’은 전시 제목이며 각 작품의 정확한 제작연대가 아닙니다.</p><p class="small muted">출처 확인일: 2026-11-13 · 상세 검증과 미확인 항목은 <a href="./sources.md">sources.md</a> · <a href="./README.md">실행·검증 안내</a></p></dialog>
+<dialog id="sources-dialog" aria-labelledby="sources-title"><div class="dialog-header"><h2 id="sources-title">전시 안내 · 출처</h2><button data-close aria-label="전시 안내 닫기">닫기 ×</button></div><p>《천 년 전의 경고: 지붕 위의 수호자, 귀면와》는 국립중앙박물관 제안용 비공식 시범 웹전시입니다. 기관의 승인·협력·후원을 의미하지 않습니다.</p><p>소장품 정보와 사진: 국립중앙박물관. 아래 세 작품의 공식 페이지에서 공공누리 제1유형(출처표시)을 확인했습니다. 원본 사진의 색·형태를 편집하지 않았습니다.</p><div id="source-list"></div><p><a href="https://www.kogl.or.kr/info/licenseType1.do" target="_blank" rel="noopener">공공누리 제1유형 이용 조건 ↗</a></p><p>배경음악 《지붕 위의 고요》는 외부 음원이나 샘플 없이 제작한 전시용 합성 음악입니다. 옛 음악을 복원한 자료가 아닙니다. 재생·정지와 음량을 직접 조절할 수 있으며 다른 탭으로 이동하면 일시정지합니다.</p><p>역사적 맥락: 한국문화정보원 문화포털 귀면와 해설. 소장품의 확인된 정보, 사진 관찰, 현대적 해석을 구분합니다. ‘천 년’은 전시 제목이며 각 작품의 정확한 제작연대가 아닙니다.</p><p class="small muted">출처 확인일: 2026-11-13 · 상세 검증과 미확인 항목은 <a href="./sources.md">sources.md</a> · <a href="./README.md">실행·검증 안내</a></p></dialog>
 </body></html>

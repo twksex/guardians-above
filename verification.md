@@ -77,3 +77,12 @@ POST /repos/twksex/guardians-above/pages로 main 및 루트 폴더를 지정해 
 ## Pages 공개 완료
 
 사용자가 GitHub 웹 UI에서 main 및 /(root)를 선택해 Pages를 활성화했다. 배포 실행 43345682253이 success로 완료되었고 Pages API 상태 built 및 html_url https://twksex.github.io/guardians-above/ 를 확인했다. 실제 공개 주소의 HTML, style.css, script.js, assets/A01.jpg, assets/A02.jpg, assets/A03.jpg가 모두 HTTP 200을 반환하고 HTML에 전시 제목이 포함되어 있음을 확인했다. 초기 building 단계의 일시적 404는 배포 완료 후 해소되었다. 이 검증은 실제 브라우저 조작 검증을 대신하지 않는다. 앞의 Pages 미검증·활성화 제한 기록은 완료 전의 이력이다.
+
+## 가독성·모션·음악 개선 검사
+
+- JavaScript 구문, 정적 파일 참조(캐시 갱신 query 포함), 기존 DOM 관람 흐름 재검사 통과.
+- 큰 글씨 전환과 기본 복원, 음악 자동재생 없음, 기본 음량, 재생·정지·음량 변경, 전시관 이동 중 재생 유지, play 거절 후 버튼 복구, 음원 오류 안내, 배경 전환 일시정지, 복귀 시 자동재생 없음, 재생 대기 중 배경 전환 취소 검사 통과. 미디어 API는 jsdom 스텁이며 실제 음향 출력 검사가 아니다.
+- ffprobe: MP3 스테레오 22,050Hz, 64.05초, 1,025,421바이트 확인. ffmpeg 전체 디코딩 성공, max_volume -15.0dB, mean_volume -27.3dB로 디지털 클리핑 없음. 합성 원본도 peak 0.1868로 1.0 미만.
+- 실제 사진의 색·형태·원본 파일은 변경하지 않음. 배경음악은 외부 음원·샘플 없이 합성했으며 원본 생성 스크립트를 포함.
+- 이미지 CSS가 hidden 속성보다 우선하지 않도록 전역 숨김 규칙 보완.
+- 지정 cua_repl.js 부재를 다시 확인. Sites 지침의 “If cua_repl.js is unavailable, skip browser QA”에 따라 실제 브라우저를 시작하지 않음. 실제 브라우저에서 모션·줄바꿈·큰 글씨·음향 출력·모바일 음량 및 전체 접근성은 미검증. 위 기존 수동 검증 목록에 새 설정과 음악 조작을 포함해 확인해야 함.
